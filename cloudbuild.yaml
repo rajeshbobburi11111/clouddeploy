@@ -4,8 +4,8 @@ steps:
     entrypoint: 'sed'
     args:
       - '-i'
-      - 's|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image:$COMMIT_SHA|g'
-      - 'deploy/dev/kustomization.yaml'
+      - 's|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/boxwood-sector-436512-f3/test1/helloworld:$COMMIT_SHA|g'
+      - 'kustomization.yaml'
 
   # Step 2: Deploy using Cloud Deploy to the dev environment.
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
@@ -18,9 +18,9 @@ steps:
       - '--delivery-pipeline=my-gke-pipeline'
       - '--region=us-central1'
       - '--source=.'
-      - '--images=my-container=us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image:$COMMIT_SHA'
+      - '--images=my-container=us-central1-docker.pkg.dev/boxwood-sector-436512-f3/test1/helloworld:$COMMIT_SHA'
 
 substitutions:
-  _IMAGE_NAME: 'my-image'
+  _IMAGE_NAME: 'helloworld'
 images:
-  - 'us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image'
+  - 'us-central1-docker.pkg.dev/boxwood-sector-436512-f3/test1/helloworld'
