@@ -34,3 +34,6 @@ substitutions:
   _IMAGE_NAME: 'helloworld'
 images:
   - 'us-central1-docker.pkg.dev/boxwood-sector-436512-f3/test1/helloworld'
+options:
+  logging: CLOUD_LOGGING_ONLY
+
