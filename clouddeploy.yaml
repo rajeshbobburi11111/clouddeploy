@@ -1,0 +1,19 @@
+apiVersion: deploy.cloud.google.com/v1
+kind: DeliveryPipeline
+metadata:
+  name: my-gke-pipeline
+spec:
+  serialPipeline:
+    stages:
+      - targetId: dev
+        profiles: []
+---
+apiVersion: deploy.cloud.google.com/v1
+kind: Target
+metadata:
+  name: dev
+description: "Development environment"
+gke:
+  cluster: projects/boxwood-sector-436512-f3/locations/us-central1-c/clusters/test1
+  location: us-central1
+  namespace: default
