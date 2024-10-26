@@ -1,0 +1,26 @@
+steps:
+  # Step 1: Replace the placeholder image in the Kubernetes manifest with the actual image reference.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'sed'
+    args:
+      - '-i'
+      - 's|IMAGE_PLACEHOLDER|us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image:$COMMIT_SHA|g'
+      - 'deploy/dev/kustomization.yaml'
+
+  # Step 2: Deploy using Cloud Deploy to the dev environment.
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    args:
+      - 'gcloud'
+      - 'deploy'
+      - 'releases'
+      - 'create'
+      - '$COMMIT_SHA'
+      - '--delivery-pipeline=my-gke-pipeline'
+      - '--region=us-central1'
+      - '--source=.'
+      - '--images=my-container=us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image:$COMMIT_SHA'
+
+substitutions:
+  _IMAGE_NAME: 'my-image'
+images:
+  - 'us-central1-docker.pkg.dev/PROJECT_ID/my-repo/my-image'
